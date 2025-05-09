@@ -14,6 +14,7 @@ M.settings = {
             return {
                 date = os.date("%Y-%m-%d %H:%M:%S"),
                 tags = "",
+                aliases = { name },
             }
         end,
     },
@@ -48,7 +49,7 @@ local function generate_frontmatter(tbl)
     for key, value in pairs(tbl) do
         if type(value) == "table" then
             local array_items = vim.tbl_map(function(v)
-                return tostring(v)
+                return '"' .. tostring(v) .. '"'
             end, value)
             table.insert(lines, string.format("%s: [%s]", key, table.concat(array_items, ", ")))
         else
